@@ -11,15 +11,50 @@ body{
     --mark-size : calc(var(--cell-size)*0.9);
 }
 
+.front-page{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    background-color: rgba(0,0,0,0.9 );
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+}
+
+.front-page.hidden{
+    display: none;
+}
+
+.front-page button{
+    font-size: 3rem;
+    background-color: white;
+    border: 5px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+}
+
+.front-page button:hover{
+    background-color: black;
+    color: white;
+}
+
 .board{
     height: 100vh;
     width: 100vw;
-    display: grid;
+    display: none;
     align-content: center;
     justify-content: center;
     grid-template-columns: repeat(3, auto);
     justify-items: center;
     align-items: center;
+}
+.board.show{
+    display: grid;
 }
 
 .cell{
@@ -130,14 +165,16 @@ body{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.9 );
     display: none;
+    background-color: rgba(0,0,0,0.9 );
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
     font-size: 5rem;
 }
+
+
 
 .winning-message button{
     font-size: 3rem;
