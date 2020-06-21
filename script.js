@@ -92,7 +92,7 @@ function findBestMove(){
     for(var i=0;i<9;i++){
         if(!(cellElements[i].classList.contains(x_class) || cellElements[i].classList.contains(circle_class))){
             cellElements[i].classList.add(x_class)
-            var score = minimax(false)
+            var score = minimax(false, Number.MIN_VALUE, Number.MAX_VALUE)
             cellElements[i].classList.remove(x_class)
             if(score>maxScore){
                 maxScore = score
@@ -104,7 +104,7 @@ function findBestMove(){
 }
 
 
-function minimax(isMax){
+function minimax(isMax, alpha, beta){
     var score = evaluate()
     if(score == 10 || score == -10){
         return score
@@ -113,24 +113,32 @@ function minimax(isMax){
         return 0;
     }
     if(isMax){
-        var maxScore = -1000
+        var maxScore = Number.MIN_VALUE
         for(var i=0;i<9;i++){
             
             if(!(cellElements[i].classList.contains(x_class) || cellElements[i].classList.contains(circle_class))){
                 cellElements[i].classList.add(x_class)
-                maxScore = Math.max(maxScore, minimax(!isMax))
+                maxScore = Math.max(maxScore, minimax(!isMax, alpha, beta))
                 cellElements[i].classList.remove(x_class)
+                alpha = Math.max(alpha, maxScore)
+                if (beta<=alpha){
+                    break
+                }
             }
         }
         return maxScore
     }
-    var minScore = 1000
+    var minScore = Number.MAX_VALUE
     for(var i=0;i<9;i++){
         
         if(!(cellElements[i].classList.contains(x_class) || cellElements[i].classList.contains(circle_class))){
             cellElements[i].classList.add(circle_class)
-            minScore = Math.min(minScore, minimax(!isMax))
+            minScore = Math.min(minScore, minimax(!isMax, alpha, beta))
             cellElements[i].classList.remove(circle_class)
+            beta = Math.min(beta, minScore)
+            if(beta<=alpha){
+                break
+            }
         }
     }
     return minScore
